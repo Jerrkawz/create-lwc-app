@@ -61,6 +61,7 @@ class CreateGenerator extends Generator {
     silent?: boolean = false
     targetPathClient = 'src/'
     typescript?: any
+    slds?: boolean
     yarn!: boolean
 
     constructor(args: any, opts: any) {
@@ -72,6 +73,7 @@ class CreateGenerator extends Generator {
             edge: opts.options.includes('edge'),
             bundler: opts.options.includes('rollup') ? 'rollup' : 'webpack',
             silent: opts.silent,
+            slds: opts.options.includes('slds'),
             appType: opts.type,
             cordova: opts.cordova
         }
@@ -92,7 +94,8 @@ class CreateGenerator extends Generator {
                 appType: 'standard',
                 cordova: [],
                 bundler: 'webpack',
-                pkg: this.options.yarn ? 'yarn' : 'npm'
+                pkg: this.options.yarn ? 'yarn' : 'npm',
+                slds: false
             },
             this.options
         )
@@ -154,6 +157,12 @@ class CreateGenerator extends Generator {
                     },
                     {
                         type: 'confirm',
+                        name: 'slds',
+                        message: messages.questions.slds,
+                        default: this.defaults.slds
+                    },
+                    {
+                        type: 'confirm',
                         name: 'clientserver',
                         message: messages.questions.clientserver,
                         default: this.defaults.clientserver
@@ -205,6 +214,12 @@ class CreateGenerator extends Generator {
                         default: this.defaults.appType
                     },
                     {
+                        type: 'confirm',
+                        name: 'slds',
+                        message: messages.questions.slds,
+                        default: this.defaults.slds
+                    },
+                    {
                         type: 'list',
                         name: 'bundler',
                         message: messages.questions.bundler,
@@ -254,6 +269,7 @@ class CreateGenerator extends Generator {
         this.edge = this.options.edge
         this.bundler = this.options.bundler
         this.appType = this.options.appType
+        this.slds = this.options.slds
 
         if (this.clientserver) {
             this.targetPathClient = 'src/client/'
@@ -476,6 +492,9 @@ class CreateGenerator extends Generator {
         }
         if (this.typescript) {
             devDependencies.push('@types/jest')
+        }
+        if (this.slds) {
+            devDependencies.push('@salesforce-ux/design-system')
         }
 
         if (hasGit) {
@@ -727,6 +746,7 @@ interface GeneratorOptions {
     yarn: boolean
     clientserver: boolean
     typescript: any
+    slds: boolean
     edge: boolean
     bundler: string
 }
@@ -743,6 +763,7 @@ interface GeneratorAnswers {
     license: string
     pkg: string
     typescript: string
+    slds: boolean
     bundler: string
     appType: string
 }
