@@ -17,7 +17,10 @@ module.exports = {
         <% if (appType === 'pwa' && !clientserver) { %>
             , { from: 'src/client/manifest.json', to: 'dist/manifest.json'}
         <% } %>
-            ],
+        <% if (slds) { %>
+            , { from: 'node_modules/@salesforce-ux/design-system/assets', to: 'dist/resources/assets',}
+        <% } %>
+        ],
         <% if (clientserver) { %>
             sourceDir: './src/client',
         <% } %>

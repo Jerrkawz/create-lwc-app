@@ -26,6 +26,8 @@ export const messages = {
         clientserver: 'Do you want a basic Express API server?',
         bundler: 'Select a bundler',
         typescript: 'Use TypeScript or JavaScript',
-        edge: 'Do you want to use Edge (non-Chromium version) as browser'
+        edge: 'Do you want to use Edge (non-Chromium version) as browser',
+        slds:
+            'Would you like to include the Lightning Design System CSS Framework?'
     }
 }
